@@ -128,10 +128,15 @@ async function run() {
 
       if (!email) return res.status(400).send({ message: "Email required" });
 
+      console.log("Fetching purchases for:", email); // Debug
+
       purchaseColl
-        .find({ purchased_By: email })
+        .find({ purchased_By: email }) // 🔥 শুধু এই email এর data
         .toArray()
-        .then((data) => res.send(data));
+        .then((data) => res.send(data))
+        .catch((err) =>
+          res.status(500).send({ message: "Server Error", error: err })
+        );
     });
 
     app.get("/myModel/:id", async (req, res) => {
