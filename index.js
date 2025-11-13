@@ -113,7 +113,7 @@ async function run() {
       const query = {
         _id: new ObjectId(id),
       };
-      const result = await purchaseColl.deleteOne(query);
+      const result = await purchaseColl.findOne(query);
       res.send(result);
     });
 
