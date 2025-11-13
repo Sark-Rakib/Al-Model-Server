@@ -123,6 +123,19 @@ async function run() {
       res.send(result);
     });
 
+    pp.get("/purchase", (req, res) => {
+      const email = req.query.email; // frontend থেকে পাঠানো
+      if (!email) {
+        return res.status(400).send({ message: "Email required" });
+      }
+
+      // MongoDB query — শুধু ওই ইউজারের purchases
+      purchaseColl
+        .find({ purchased_By: email })
+        .toArray()
+        .then((purchases) => res.send(purchases));
+    });
+
     app.get("/myModel/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
