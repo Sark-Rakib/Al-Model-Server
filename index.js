@@ -123,17 +123,15 @@ async function run() {
       res.send(result);
     });
 
-    pp.get("/purchase", (req, res) => {
-      const email = req.query.email; // frontend থেকে পাঠানো
-      if (!email) {
-        return res.status(400).send({ message: "Email required" });
-      }
+    app.get("/purchase", (req, res) => {
+      const email = req.query.email;
 
-      // MongoDB query — শুধু ওই ইউজারের purchases
+      if (!email) return res.status(400).send({ message: "Email required" });
+
       purchaseColl
         .find({ purchased_By: email })
         .toArray()
-        .then((purchases) => res.send(purchases));
+        .then((data) => res.send(data));
     });
 
     app.get("/myModel/:id", async (req, res) => {
