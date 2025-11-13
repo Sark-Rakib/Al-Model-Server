@@ -123,6 +123,12 @@ async function run() {
       res.send(result);
     });
 
+    app.post("/purchase", async (req, res) => {
+      const purchase = req.body;
+      const result = await purchaseColl.insertOne(purchase);
+      res.send(result);
+    });
+
     app.get("/myModel/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
