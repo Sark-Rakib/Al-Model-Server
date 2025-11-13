@@ -123,22 +123,6 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/purchase", (req, res) => {
-      const email = req.query.email;
-
-      if (!email) return res.status(400).send({ message: "Email required" });
-
-      console.log("Fetching purchases for:", email); // Debug
-
-      purchaseColl
-        .find({ purchased_By: email }) // 🔥 শুধু এই email এর data
-        .toArray()
-        .then((data) => res.send(data))
-        .catch((err) =>
-          res.status(500).send({ message: "Server Error", error: err })
-        );
-    });
-
     app.get("/myModel/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
