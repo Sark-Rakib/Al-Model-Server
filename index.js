@@ -130,6 +130,14 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/search", async (req, res) => {
+      const searchText = req.query.search;
+      const result = await modelColl
+        .find({ name: { $regex: searchText, $options: "i" } })
+        .toArray();
+      res.send(result);
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
